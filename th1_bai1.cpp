@@ -10,18 +10,18 @@
   ...
 */
 
-//int main()
-//{
-//	int a, b, c;
-//	
-//	a = 5;
-//	b = 10;
-//	c = a + b;
-//	
-//	printf("%d\n", c);
-//	
-//	return 0;	
-//}
+// int main()
+// {
+// 	int a, b, c;
+	
+// 	a = 5;
+// 	b = 10;
+// 	c = a + b;
+	
+// 	printf("%d\n", c);
+	
+// 	return 0;	
+// }
 
 /*
 Bai 1.1 b)
@@ -30,29 +30,29 @@ Neu chua, cac ban phai rang buoc lai dieu kien (Bat buoc)
 In ra thong bao neu khong thoa dieu kien
 */
 
-//int main()
-//{
-//	int d;
-//	printf("Nhap diem: ");
-//	scanf("%d", &d);
-//	
-//	if (d >= 0 && d <= 100)
-//	{
-//		if (d < 50)
-//			printf("Truot");
-//		else
-//		{
-//			if (d < 80)
-//				printf("Kha");
-//			else
-//				printf("Gioi");
-//		}
-//	} 
-//	else 
-//		printf("Vuot qua gioi han!");
-//	
-//	return 0;
-//}
+int main()
+{
+	int d;
+	printf("Nhap diem: ");
+	scanf("%d", &d);
+	
+	if (d >= 0 && d <= 100)
+	{
+		if (d < 50)
+			printf("Truot");
+		else
+		{
+			if (d < 80)
+				printf("Kha");
+			else
+				printf("Gioi");
+		}
+	} 
+	else 
+		printf("Vuot qua gioi han!");
+	
+	return 0;
+}
 
 /*
 1.1 c)

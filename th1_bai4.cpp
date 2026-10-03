@@ -13,7 +13,7 @@ void inRaManHinh(float arr[], int n)
 int timPhanTuLonNhat(float arr[], int n)
 {
 	// Khoi tao bien tam
-	float max = arr[1];
+	float max = arr[0];
 	
 	/*
 	Duyet mang

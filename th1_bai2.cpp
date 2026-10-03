@@ -34,14 +34,14 @@ Su dung cong thuc toan la
 n * (n + 1) / 2
 */
 
-//int main()
-//{
-//	int n;
-//	printf("n = ");
-//	scanf("%d", &n);
-//	
-//	int result = n * (n + 1) / 2;
-//	printf("%d", result);
-//	
-//	return 0;
-//}
+int main()
+{
+	int n;
+	printf("n = ");
+	scanf("%d", &n);
+	
+	int result = n * (n + 1) / 2;
+	printf("%d", result);
+	
+	return 0;
+}
