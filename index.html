@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect x=%221%22 y=%2212%22 width=%2214%22 height=%223%22 rx=%221%22 fill=%22%23228be6%22/%3E%3Crect x=%223%22 y=%228%22 width=%2210%22 height=%223%22 rx=%221%22 fill=%22%23228be6%22/%3E%3Crect x=%225%22 y=%224%22 width=%226%22 height=%223%22 rx=%221%22 fill=%22%23228be6%22/%3E%3C/svg%3E">
+    <title>Kỹ thuật lập trình</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fcfcfb;
+  --card: #ffffff;
+  --text: #0b0b0b;
+  --muted: #52514e;
+  --border: rgb(11 11 11 / 12%);
+  --accent: #184f95;
+  --accent-bg: #cde2fb;
+  --radius: 0.75rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #151515;
+    --card: #1b1b1a;
+    --text: #f0efec;
+    --muted: #c3c2b7;
+    --border: rgb(255 255 255 / 12%);
+    --accent: #6da7ec;
+    --accent-bg: #032042;
+  }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding: 32px 16px;
+}
+main { max-width: 640px; margin: 0 auto; }
+h1 { font-size: 22px; font-weight: 600; }
+.sub { color: var(--muted); font-size: 14px; margin: 4px 0 24px; }
+.options { list-style: none; display: grid; gap: 12px; }
+.options a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.1s;
+}
+.options a:hover { border-color: var(--accent); }
+.options a:active { transform: scale(0.99); }
+.chev { flex-shrink: 0; color: var(--muted); }
+.options a:hover .chev { color: var(--accent); }
+.title { font-weight: 500; }
+.desc { color: var(--muted); font-size: 14px; margin-top: 2px; }
+.text { margin-right: auto; }
+.tag {
+  flex-shrink: 0;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+</style>
+</head>
+<body>
+<main>
+  <h1>Kỹ thuật lập trình</h1>
+  <p class="sub">Chọn bài thực hành để mở.</p>
+  <ul class="options" id="options"></ul>
+</main>
+<script>
+// Thêm bài mới: thêm một phần tử vào mảng này
+var OPTIONS = [
+  {
+    title: 'Bài thực hành 3',
+    desc: 'Đệ quy: tổng chính phương, tìm vị trí đầu tiên, Tháp Hà Nội',
+    tag: 'React',
+    href: 'bai-thuc-hanh-3/dist/'
+  }
+];
+
+var list = document.getElementById('options');
+OPTIONS.forEach(function (o) {
+  var li = document.createElement('li');
+  var a = document.createElement('a');
+  a.href = o.href;
+  var text = document.createElement('div');
+  text.className = 'text';
+  var title = document.createElement('div');
+  title.className = 'title';
+  title.textContent = o.title;
+  var desc = document.createElement('div');
+  desc.className = 'desc';
+  desc.textContent = o.desc;
+  text.append(title, desc);
+  a.append(text);
+  if (o.tag) {
+    var tag = document.createElement('span');
+    tag.className = 'tag';
+    tag.textContent = o.tag;
+    a.append(tag);
+  }
+  // Icon chevron-right (Tabler)
+  a.insertAdjacentHTML('beforeend', '<svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6l-6 6"/></svg>');
+  li.append(a);
+  list.append(li);
+});
+</script>
+</body>
+</html>

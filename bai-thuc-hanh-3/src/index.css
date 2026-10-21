@@ -1,0 +1,337 @@
+/* Phần còn lại ngoài Mantine: mảng và Tháp Hà Nội.
+   Màu lấy từ biến của Mantine để tự đổi theo nền sáng/tối. */
+:root {
+  --surface-0: var(--mantine-color-body);
+  --text-primary: var(--mantine-color-text);
+  --text-secondary: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-1));
+  --text-muted: var(--mantine-color-dimmed);
+  --border: var(--mantine-color-default-border);
+  --bg-accent: var(--mantine-primary-color-light);
+  --text-accent: var(--mantine-primary-color-light-color);
+  --border-accent: var(--mantine-primary-color-filled);
+  --ok-bg: light-dark(#e1f5ee, #085041);
+  --ok-border: light-dark(#0f6e56, #5dcaa5);
+  --ok-text: light-dark(#085041, #9fe1cb);
+  --cuc-bg: light-dark(#eeedfe, #3c3489);
+  --cuc-border: light-dark(#534ab7, #afa9ec);
+  --cuc-text: light-dark(#3c3489, #cecbf6);
+  --day-bg: light-dark(#d0ebff, #1c4a75);
+  --day-border: light-dark(#1971c2, #74c0fc);
+  --day-text: light-dark(#1864ab, #a5d8ff);
+  --radius: var(--mantine-radius-md);
+  --font-mono: var(--mantine-font-family-monospace);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* Navbar: các tab không xuống dòng, cuộn ngang khi hẹp */
+.nav-tabs {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-tabs > * {
+  flex-shrink: 0;
+}
+@media (max-width: 36em) {
+  .nav-tabs > * {
+    padding-inline: 10px;
+  }
+}
+
+/* Ghi chú cỡ lớn dưới phần minh hoạ */
+.idea {
+  min-height: 1.4em;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: clamp(20px, 3.5vw, 40px);
+  font-weight: 600;
+}
+
+/* 3 bước của bài Tháp Hà Nội đang xét */
+.step {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  padding: 6px 8px;
+  margin-top: 4px;
+  border-radius: var(--radius);
+  color: var(--text-muted);
+}
+.step:first-child {
+  margin-top: 0;
+}
+.step.on {
+  background: var(--bg-accent);
+  color: var(--text-accent);
+  font-weight: 600;
+}
+.step.xong {
+  color: var(--ok-text);
+}
+.step-arrow {
+  vertical-align: -3px;
+}
+.sw {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1.5px solid;
+}
+.sw.cuc {
+  background: var(--cuc-bg);
+  border-color: var(--cuc-border);
+}
+.sw.day {
+  background: var(--day-bg);
+  border-color: var(--day-border);
+}
+
+/* Thanh đường dẫn các tầng đang mở */
+.crumbs {
+  min-height: 30px;
+  font-family: var(--font-mono);
+  font-size: clamp(16px, 2vw, 20px);
+  flex-wrap: wrap;
+  row-gap: 4px;
+}
+.crumbs button {
+  font: inherit;
+}
+
+/* Mảng */
+.arr-wrap {
+  overflow-x: auto;
+  padding: 4px 2px;
+}
+.arr {
+  display: flex;
+  gap: 6px;
+  width: max-content;
+}
+.slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  width: 48px;
+}
+.idx {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.cell {
+  width: 48px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  background: var(--surface-0);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: background 0.2s, border-color 0.2s;
+}
+.cell.ghost {
+  background: transparent;
+  border-style: dashed;
+}
+.cell.ok {
+  background: var(--ok-bg);
+  border-color: var(--ok-border);
+  color: var(--ok-text);
+}
+.cell.no {
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+.cell.found {
+  background: var(--bg-accent);
+  border-color: var(--border-accent);
+  color: var(--text-accent);
+  font-weight: 600;
+}
+.cell.cur {
+  outline: 2px solid var(--border-accent);
+  outline-offset: 1px;
+}
+.ptr {
+  min-height: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-accent);
+  font-family: var(--font-mono);
+}
+.ptr-icon {
+  width: 16px;
+  height: 16px;
+}
+.below {
+  height: 18px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Mảng cỡ lớn: các ô chia đều hết chiều ngang */
+.arr-wrap.lg .arr {
+  width: 100%;
+  gap: clamp(4px, 1vw, 12px);
+}
+.arr-wrap.lg .slot {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto;
+  gap: 6px;
+}
+.arr-wrap.lg .idx {
+  font-size: clamp(14px, 2vw, 26px);
+}
+.arr-wrap.lg .cell {
+  width: 100%;
+  height: clamp(64px, 12vw, 160px);
+  font-size: clamp(22px, 5vw, 64px);
+  border-width: 2px;
+  border-radius: calc(var(--radius) * 1.5);
+}
+.arr-wrap.lg .cell.cur {
+  outline-width: 4px;
+  outline-offset: 2px;
+}
+.arr-wrap.lg .ptr {
+  min-height: clamp(64px, 11vw, 128px);
+  font-size: clamp(32px, 6vw, 72px);
+  font-weight: 700;
+}
+.arr-wrap.lg .ptr-icon {
+  width: clamp(28px, 5vw, 60px);
+  height: clamp(28px, 5vw, 60px);
+}
+.arr-wrap.lg .below {
+  height: auto;
+  min-height: 1.4em;
+  font-size: clamp(18px, 3vw, 36px);
+}
+
+/* Tháp Hà Nội */
+.hanoi {
+  display: block;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+.hanoi .base {
+  fill: light-dark(#5f5e5a, #b4b2a9);
+}
+.hanoi .name {
+  font-size: 18px;
+  font-weight: 600;
+  fill: var(--text-primary);
+}
+.hanoi .rod {
+  fill: light-dark(#8a8983, #6d6b67);
+}
+
+/* Thẻ vai trò: trượt sang cọc mới khi vai trò đổi */
+.tag {
+  transition: transform var(--dur) ease-in-out;
+}
+.tag text {
+  font-size: 14px;
+  font-weight: 600;
+  fill: #fff;
+}
+.tag-nguon rect {
+  fill: light-dark(#c2410c, #ea580c);
+}
+.tag-dich rect {
+  fill: light-dark(#0f766e, #0d9488);
+}
+.tag-trungGian rect {
+  fill: light-dark(#6b6a65, #57534e);
+}
+
+.disk {
+  transition: transform var(--dur) ease-in-out, opacity 0.25s;
+}
+.disk rect {
+  stroke-width: 1.5;
+  transition: fill 0.25s, stroke 0.25s;
+}
+.disk text {
+  font-size: 12px;
+  font-weight: 600;
+  pointer-events: none;
+}
+.disk.thuong rect,
+.disk.cuc rect {
+  fill: var(--cuc-bg);
+  stroke: var(--cuc-border);
+}
+.disk.thuong text,
+.disk.cuc text {
+  fill: var(--cuc-text);
+}
+.disk.day rect {
+  fill: var(--day-bg);
+  stroke: var(--day-border);
+}
+.disk.day text {
+  fill: var(--day-text);
+}
+.disk.ngoai {
+  opacity: 0.2;
+}
+.disk.ngoai rect {
+  fill: var(--surface-0);
+  stroke: var(--text-muted);
+}
+.disk.ngoai text {
+  fill: var(--text-muted);
+}
+
+/* Khung bao quanh cục; bấm để mở khi được */
+.khung {
+  transition: transform var(--dur) ease-in-out;
+}
+.khung rect {
+  fill: transparent;
+  stroke: var(--cuc-border);
+  stroke-width: 2;
+  stroke-dasharray: 6 4;
+}
+.khung.mo-duoc {
+  cursor: zoom-in;
+}
+.khung.mo-duoc rect {
+  pointer-events: all;
+}
+.khung.mo-duoc:hover rect {
+  fill: color-mix(in srgb, var(--cuc-border) 12%, transparent);
+}
+
+.idea-arrow {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+}
+
+/* Màn hẹp: SVG bị thu nhỏ nên phóng to chữ để vẫn đọc được */
+@media (max-width: 36em) {
+  .hanoi .name {
+    font-size: 22px;
+  }
+  .tag text {
+    font-size: 16px;
+  }
+  .disk text {
+    font-size: 15px;
+  }
+}
