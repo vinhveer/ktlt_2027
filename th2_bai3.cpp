@@ -7,30 +7,36 @@ float tinhTienTaxi(
     int giaMoiKm = 12000
 )
 {
-    return giaMoCua + soKm * giaMoiKm;
+    if (soKm <= 1)
+        return giaMoCua;
+
+    return giaMoCua + (soKm - 1) * giaMoiKm;
 }
 
 int main(int argc, char *argv[])
 {
-    if (argc > 4)
+    if (argc < 2 || argc > 4)
     {
         printf("Doi so khong hop le!");
         return 0;
     }
 
-    float soKm = atof(argv[2]);
+    float soKm = atof(argv[1]);
 
-    if (argc == 3)
+    if (argc == 2)
         printf("%.0f", tinhTienTaxi(soKm));
 
-    else if (argc == 4)
-        printf("%.0f", tinhTienTaxi(soKm, atoi(argv[3])));
+    else if (argc == 3)
+        printf("%.0f", tinhTienTaxi(
+            soKm,
+            atoi(argv[2])
+        ));
 
     else
         printf("%.0f", tinhTienTaxi(
             soKm,
-            atoi(argv[3]),
-            atoi(argv[4])
+            atoi(argv[2]),
+            atoi(argv[3])
         ));
 
     return 0;
