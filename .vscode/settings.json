@@ -1,0 +1,11 @@
+{
+    "C_Cpp.debugShortcut": true,
+    "C_Cpp.intelliSenseEngine": "default",
+    "C_Cpp.errorSquiggles": "enabled",
+    "files.associations": {
+        "*.inp": "plaintext",
+        "*.out": "plaintext"
+    },
+    "task.autoDetect": "off",
+    "npm.autoDetect": "off"
+}
