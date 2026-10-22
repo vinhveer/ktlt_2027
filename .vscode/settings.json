@@ -6,6 +6,7 @@
         "*.inp": "plaintext",
         "*.out": "plaintext"
     },
+    "terminal.integrated.defaultLocation": "editor",
     "task.autoDetect": "off",
     "npm.autoDetect": "off"
 }

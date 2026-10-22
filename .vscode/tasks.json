@@ -46,14 +46,15 @@
             "dependsOn": "C++: build",
             "group": {
                 "kind": "build",
-                "isDefault": false
+                "isDefault": true
             },
             "presentation": {
                 "reveal": "always",
                 "focus": true,
                 "panel": "shared",
                 "clear": true,
-                "echo": false
+                "echo": false,
+                "showReuseMessage": false
             },
             "problemMatcher": []
         },
@@ -87,7 +88,7 @@
             "dependsOn": "C++: build",
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": false
             },
             "presentation": {
                 "reveal": "never"
