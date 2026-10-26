@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Cây đệ quy đếm bóng</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    input {
+        width: 60px;
+        padding: 5px;
+        margin-right: 10px;
+    }
+
+    button {
+        padding: 6px 12px;
+        cursor: pointer;
+    }
+
+    #tree {
+        margin-top: 25px;
+        overflow-x: auto;
+    }
+
+    ul {
+        position: relative;
+        list-style: none;
+        padding-left: 35px;
+        margin: 0;
+    }
+
+    li {
+        position: relative;
+        padding: 8px 0 0 25px;
+    }
+
+    li::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        left: 0;
+        width: 20px;
+        border-top: 1px solid #777;
+    }
+
+    li::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        border-left: 1px solid #777;
+    }
+
+    li:last-child::after {
+        height: 20px;
+    }
+
+    .node {
+        display: inline-block;
+        padding: 5px 9px;
+        border: 1px solid #999;
+        border-radius: 5px;
+        background: white;
+        white-space: nowrap;
+    }
+
+    .accept {
+        background: #d9ffd9;
+        border-color: green;
+    }
+
+    .reject {
+        background: #ffdada;
+        border-color: red;
+    }
+
+    .cut {
+        background: #eeeeee;
+        color: #777;
+        text-decoration: line-through;
+    }
+
+    .info {
+        margin-top: 15px;
+        font-weight: bold;
+    }
+</style>
+</head>
+
+<body>
+
+<h2>Cây đệ quy demBong()</h2>
+
+<label>
+    n =
+    <input id="n" type="number" value="3" min="1" max="10">
+</label>
+
+<label>
+    k =
+    <input id="k" type="number" value="2" min="0" max="10">
+</label>
+
+<button onclick="veCay()">Vẽ cây</button>
+
+<div class="info" id="ketqua"></div>
+
+<div id="tree"></div>
+
+<script>
+
+let dem = 0;
+
+function taoCay(a, n, k, i) {
+
+    const ul = document.createElement("ul");
+
+    /*
+        Tương ứng:
+
+        if (i == n)
+            return k <= 0;
+    */
+
+    if (i === n)
+        return ul;
+
+    for (let j = 0; j <= 1; j++) {
+
+        const li = document.createElement("li");
+        const node = document.createElement("span");
+
+        node.className = "node";
+
+        /*
+            Tương ứng:
+
+            if (i > 0 && a[i - 1] == 0 && j == 0)
+                continue;
+        */
+
+        if (i > 0 && a[i - 1] === 0 && j === 0) {
+
+            node.classList.add("cut");
+
+            node.textContent =
+                "0  → cắt nhánh vì 00";
+
+            li.appendChild(node);
+            ul.appendChild(li);
+
+            continue;
+        }
+
+        const b = [...a];
+        b[i] = j;
+
+        const kMoi = k - j;
+
+        node.textContent =
+            b.slice(0, i + 1).join("") +
+            "   | k còn: " + kMoi;
+
+        /*
+            Đã ném đủ n lần
+        */
+
+        if (i + 1 === n) {
+
+            if (kMoi <= 0) {
+
+                node.classList.add("accept");
+                node.textContent += "  ✓";
+
+                dem++;
+
+            } else {
+
+                node.classList.add("reject");
+                node.textContent += "  ✗";
+
+            }
+
+        } else {
+
+            node.appendChild(
+                taoCay(b, n, kMoi, i + 1)
+            );
+        }
+
+        li.appendChild(node);
+        ul.appendChild(li);
+    }
+
+    return ul;
+}
+
+
+function veCay() {
+
+    const n = Number(
+        document.getElementById("n").value
+    );
+
+    const k = Number(
+        document.getElementById("k").value
+    );
+
+    if (n <= 0 || n > 10) {
+        alert("Chọn 0 < n <= 10 để cây không quá lớn");
+        return;
+    }
+
+    dem = 0;
+
+    const tree =
+        document.getElementById("tree");
+
+    tree.innerHTML = "";
+
+    const root =
+        document.createElement("div");
+
+    const rootNode =
+        document.createElement("span");
+
+    rootNode.className = "node";
+
+    rootNode.textContent =
+        "Bắt đầu: n = " + n +
+        ", cần ít nhất k = " + k;
+
+    root.appendChild(rootNode);
+
+    root.appendChild(
+        taoCay([], n, k, 0)
+    );
+
+    tree.appendChild(root);
+
+    document.getElementById("ketqua")
+        .textContent =
+        "Số cách = " + dem;
+}
+
+veCay();
+
+</script>
+
+</body>
+</html>

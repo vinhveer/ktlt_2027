@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Cây phân tích số</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    input {
+        width: 60px;
+        padding: 5px;
+    }
+
+    button {
+        padding: 6px 12px;
+        cursor: pointer;
+    }
+
+    ul {
+        list-style-type: none;
+        position: relative;
+        padding-left: 35px;
+    }
+
+    li {
+        position: relative;
+        padding: 6px 0 0 20px;
+    }
+
+    /* đường ngang */
+    li::before {
+        content: "";
+        position: absolute;
+        top: 16px;
+        left: 0;
+        width: 15px;
+        border-top: 1px solid #777;
+    }
+
+    /* đường dọc */
+    li::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        border-left: 1px solid #777;
+    }
+
+    li:last-child::after {
+        height: 16px;
+    }
+
+    .node {
+        display: inline-block;
+        border: 1px solid #999;
+        border-radius: 5px;
+        padding: 4px 8px;
+        background: white;
+    }
+
+    .done {
+        font-weight: bold;
+        background: #e8ffe8;
+    }
+</style>
+</head>
+
+<body>
+
+<h2>Cây phân tích số nguyên</h2>
+
+<label>
+    n =
+    <input id="n" type="number" min="1" max="19" value="5">
+</label>
+
+<button onclick="veCay()">Vẽ cây</button>
+
+<div id="tree"></div>
+
+<script>
+function taoCay(conLai, min, day) {
+    const ul = document.createElement("ul");
+
+    for (let i = min; i <= conLai; i++) {
+
+        const li = document.createElement("li");
+
+        const dayMoi = [...day, i];
+
+        const node = document.createElement("span");
+        node.className = "node";
+
+        const conLaiMoi = conLai - i;
+
+        if (conLaiMoi === 0) {
+            node.classList.add("done");
+            node.textContent = dayMoi.join(" + ") + " ✓";
+        }
+        else {
+            node.textContent =
+                dayMoi.join(" + ") +
+                "   (còn " + conLaiMoi + ")";
+        }
+
+        li.appendChild(node);
+
+        if (conLaiMoi > 0) {
+            li.appendChild(
+                taoCay(conLaiMoi, i, dayMoi)
+            );
+        }
+
+        ul.appendChild(li);
+    }
+
+    return ul;
+}
+
+function veCay() {
+    const n = Number(document.getElementById("n").value);
+
+    if (n <= 0 || n >= 20) {
+        alert("n phải thỏa 0 < n < 20");
+        return;
+    }
+
+    const tree = document.getElementById("tree");
+
+    tree.innerHTML = "";
+
+    const root = document.createElement("div");
+    root.innerHTML = "<h3>n = " + n + "</h3>";
+
+    root.appendChild(
+        taoCay(n, 1, [])
+    );
+
+    tree.appendChild(root);
+}
+
+veCay();
+</script>
+
+</body>
+</html>

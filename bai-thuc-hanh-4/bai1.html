@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Cây chuỗi nhị phân</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    input {
+        width: 60px;
+        padding: 5px;
+    }
+
+    button {
+        padding: 6px 12px;
+        margin-left: 8px;
+        cursor: pointer;
+    }
+
+    #tree {
+        margin-top: 25px;
+        overflow-x: auto;
+    }
+
+    ul {
+        list-style: none;
+        position: relative;
+        padding-left: 35px;
+        margin: 0;
+    }
+
+    li {
+        position: relative;
+        padding: 8px 0 0 25px;
+    }
+
+    li::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        left: 0;
+        width: 20px;
+        border-top: 1px solid #777;
+    }
+
+    li::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        border-left: 1px solid #777;
+    }
+
+    li:last-child::after {
+        height: 20px;
+    }
+
+    .node {
+        display: inline-block;
+        border: 1px solid #999;
+        border-radius: 5px;
+        padding: 5px 9px;
+        background: white;
+        white-space: nowrap;
+    }
+
+    .leaf {
+        background: #dfffe0;
+        border-color: green;
+        font-weight: bold;
+    }
+
+    #output {
+        margin-top: 25px;
+        font-family: Consolas, monospace;
+        white-space: pre;
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+</style>
+</head>
+
+<body>
+
+<h2>Cây đệ quy sinh chuỗi nhị phân</h2>
+
+<label>
+    n =
+    <input id="n" type="number" value="3" min="1" max="10">
+</label>
+
+<button onclick="veCay()">Vẽ cây</button>
+
+<div id="tree"></div>
+
+<h3>Các chuỗi được in</h3>
+<div id="output"></div>
+
+<script>
+
+let ketQua = [];
+
+/*
+    Mô phỏng:
+
+    void inChuoiNhiPhan(int a[], int n, int i)
+*/
+function taoCay(a, n, i) {
+
+    const ul = document.createElement("ul");
+
+    /*
+        for (int j = 0; j <= 1; j++)
+    */
+    for (let j = 0; j <= 1; j++) {
+
+        const li = document.createElement("li");
+
+        const node = document.createElement("span");
+        node.className = "node";
+
+        /*
+            a[i] = j;
+        */
+        const b = [...a];
+        b[i] = j;
+
+        const chuoi = b
+            .slice(0, i + 1)
+            .join("");
+
+        node.textContent =
+            chuoi + "   (i = " + (i + 1) + ")";
+
+        /*
+            Sau khi gán xong phần tử hiện tại,
+            nếu đã đủ n phần tử thì đây là lá.
+        */
+        if (i + 1 === n) {
+
+            node.classList.add("leaf");
+
+            node.textContent =
+                chuoi + "  → xuất";
+
+            ketQua.push(chuoi);
+
+        } else {
+
+            /*
+                inChuoiNhiPhan(a, n, i + 1);
+            */
+            li.appendChild(node);
+
+            li.appendChild(
+                taoCay(b, n, i + 1)
+            );
+
+            ul.appendChild(li);
+
+            continue;
+        }
+
+        li.appendChild(node);
+        ul.appendChild(li);
+    }
+
+    return ul;
+}
+
+
+function veCay() {
+
+    const n =
+        Number(document.getElementById("n").value);
+
+    if (n <= 0 || n > 10) {
+        alert("0 < n <= 10");
+        return;
+    }
+
+    ketQua = [];
+
+    const tree =
+        document.getElementById("tree");
+
+    tree.innerHTML = "";
+
+    const root =
+        document.createElement("div");
+
+    const rootNode =
+        document.createElement("span");
+
+    rootNode.className = "node";
+    rootNode.textContent =
+        "inChuoiNhiPhan(a, " + n + ", 0)";
+
+    root.appendChild(rootNode);
+
+    root.appendChild(
+        taoCay([], n, 0)
+    );
+
+    tree.appendChild(root);
+
+    document.getElementById("output")
+        .textContent =
+        ketQua.join("\n");
+}
+
+veCay();
+
+</script>
+
+</body>
+</html>

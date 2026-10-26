@@ -35,10 +35,20 @@
         },
         {
             "label": "C++: build & run",
-            "type": "process",
-            "command": "${fileDirname}/build/${fileBasenameNoExtension}",
+            "type": "shell",
+            "command": "'./build/${fileBasenameNoExtension}'",
             "windows": {
-                "command": "${fileDirname}\\build\\${fileBasenameNoExtension}.exe"
+                "command": "chcp 65001 >nul && \"build\\${fileBasenameNoExtension}.exe\"",
+                "options": {
+                    "cwd": "${fileDirname}",
+                    "shell": {
+                        "executable": "cmd.exe",
+                        "args": [
+                            "/d",
+                            "/c"
+                        ]
+                    }
+                }
             },
             "options": {
                 "cwd": "${fileDirname}"
